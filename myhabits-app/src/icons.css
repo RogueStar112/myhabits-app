@@ -1,0 +1,5 @@
+.filter-icon {
+  filter: invert(91%) sepia(16%) saturate(6094%) hue-rotate(339deg)
+    brightness(103%) contrast(97%);
+  max-height: 128px;
+}
