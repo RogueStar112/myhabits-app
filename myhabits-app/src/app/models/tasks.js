@@ -4,6 +4,15 @@
 import mongoose from "mongoose";
 import { connectToDatabase } from "../db";
 
+export const Tasks = {
+  name: String,
+  task_polarity: Boolean,
+  task_freq: Number,
+  task_avg: Number,
+  task_freq_t: Number,
+  task_avg_t: Number,
+};
+
 // export Task extends mongoose.Document {
 //  name:
 // }
@@ -34,7 +43,7 @@ const taskSchema = new mongoose.Schema({
 
 // console.log("CONNECTION", _connection);
 
-const Task = mongoose.models || mongoose.model("Task", taskSchema);
+const Task = mongoose.model("Task") || mongoose.model("Task", taskSchema);
 
 // alert(Task);
 

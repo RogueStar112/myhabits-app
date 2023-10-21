@@ -2,14 +2,25 @@
 import { connectToDatabase } from "../../../src/app/db";
 import Task from "../../../src/app/models/tasks";
 
-export const getTasks = async () => {
+const handler = async (req, res) => {
   try {
-    // await connectToDatabase();
+    const { method } = req;
 
-    const tasks = await Task.find();
-    return tasks;
+    await connectToDatabase();
+
+    switch (method) {
+      case "GET":
+        try {
+          const tasks = await Task.find({});
+          res.status(200).json({ success: true, data: tasks });
+        } catch (error) {
+          res.status(400).json({ success: false });
+        }
+    }
   } catch (error) {
     console.error(error);
     throw new Error("Unable to retrieve tasks");
   }
 };
+
+export default handler;

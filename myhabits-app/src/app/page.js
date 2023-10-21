@@ -64,8 +64,7 @@ export default function Page() {
                   Task Categorization
                 </span>
                 <br />
-                Categorize your tasks, creating Link neater way of managing
-                them.
+                Categorize your tasks, creating a neater way of managing them.
               </p>
             </section>
 

@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Header from "../header";
+import Task, { Tasks } from "../models/tasks";
 import { useState, useEffect } from "react";
 import { connectToDatabase } from "../db";
-import Task from "../models/tasks";
 
 import { createTask } from "../../../pages/api/tasks/create.ts";
 import { deleteTask } from "../../../pages/api/tasks/delete";
@@ -13,10 +13,11 @@ import { updateTask } from "../../../pages/api/tasks/update";
 
 import axios from "axios";
 
+const contentType = "application/json";
+
 const connect = async () => {
   try {
-    const response = await axios.get("/api/connect");
-    console.log("RESPONSE", response);
+    const response = await axios.get("/api/tasks/get");
   } catch (error) {
     console.error(error);
   }
@@ -27,19 +28,86 @@ connect();
 
 // connectToDatabase();
 
+console.log("TASKS", Tasks);
+console.log("TYPEOF TASKS", typeof Tasks);
+
+const TasksDOM = {
+  tasks: Array(Tasks),
+};
+
+console.log(TasksDOM);
+console.log("TOF TDOM", TasksDOM.tasks);
+
 export default function Page() {
   return (
     <section className="font-montserrat max-w-5xl mx-auto bg-[#333333] text-white">
       <Header />
+      <HabitsList />
       <h2 className="font-extrabold">HABITS MANAGER</h2>
       <AddHabitForm />
     </section>
   );
 }
 
-export function AddHabitForm() {
-  const contentType = "application/json";
+export const HabitsList = () => {
+  const [tasks, setTasks] = useState([]);
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch("api/tasks/get", {
+          method: "GET",
+          headers: {
+            Accept: contentType,
+            "Content-Type": contentType,
+          },
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+
+          if (data.success) {
+            setTasks(data.data);
+          } else {
+            console.error("API request failed");
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getData();
+  }, []);
+
+  return (
+    <div className="">
+      <h2>Habits List</h2>
+      <div className="flex gap-4">
+        <ul className="flex flex-col gap-4">
+          {tasks.map((task) => (
+            <li
+              className="w-full p-4"
+              style={{
+                backgroundColor: task.task_polarity ? "#38A169" : "#E53E3E",
+              }}
+              key={task._id}
+            >
+              <h3 className="font-extrabold">
+                {task.task_polarity ? "INCREASE..." : "DECREASE..."}
+              </h3>
+              <h3>{task.name}</h3>
+              <p>Target Frequency: {task.task_freq_t}x a week.</p>
+              <p>Target Time Spent: {task.task_avg_t} minutes</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export function AddHabitForm() {
   const [inputs, setInputs] = useState({
     habit_name: "",
     habit_polarity: "true",
@@ -72,9 +140,8 @@ export function AddHabitForm() {
     const value = event.target.value;
     setInputs((values) => {
       const inputs = { ...values, [name]: value };
-      return inputs; // Return the updated state
+      return inputs;
     });
-    console.log("INPUTS", inputs);
   };
 
   const handleRadioChange = (event) => {
@@ -83,11 +150,8 @@ export function AddHabitForm() {
     setSelectedOption(value);
     setInputs((values) => {
       const inputs = { ...values, [name]: value };
-      console.log("INPUTS", inputs);
-      return inputs; // Return the updated state
+      return inputs;
     });
-    console.log("VAL", value);
-    console.log("INPUTS HRC", inputs);
   };
 
   const handleSubmit = async (event) => {
@@ -101,12 +165,8 @@ export function AddHabitForm() {
       task_freq_t: parseInt(inputs.habit_frequency_target) || 0,
       task_avg_t: parseInt(inputs.habit_duration_target) || 0,
     };
-    // alert("TD", taskData);
-    // alert("IHBN", inputs["habit_name"]);
-    // alert("ITFRQ", inputs["habit_frequency"]);
-    postData(taskData);
 
-    console.log("TD", taskData);
+    postData(taskData);
   };
 
   /* form styling taken from: https://v1.tailwindcss.com/components/forms */
