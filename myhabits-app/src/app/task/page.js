@@ -134,7 +134,7 @@ export const HabitsList = () => {
                   href={`/edit/${task._id}`}
                   className="bg-gradient-to-r from-yellow-400 to-transparent text-black mt-2 p-2"
                 >
-                  EDIT ✏️
+                  ✏️ EDIT
                 </Link>
                 <button
                   onClick={() => deleteTask(task._id)}

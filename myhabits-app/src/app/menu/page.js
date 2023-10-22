@@ -20,20 +20,27 @@ export default function Page() {
 
           <MenuItem
             index="2"
+            title="Log Weekly Tasks"
+            description="Track your tasks."
+            href="/log"
+          />
+
+          <MenuItem
+            index="3"
             title="Import/Export Data"
             description="Export JSON files to use across multiple devices, or as a backup."
             href="/save"
           />
 
           <MenuItem
-            index="3"
+            index="4"
             title="View Statistics"
             description="See new trends. Requires at least two days of data."
             href="/stats"
           />
 
           <MenuItem
-            index="4"
+            index="5"
             title="Settings"
             description="Set themes, font, etc."
             href="/settings"
