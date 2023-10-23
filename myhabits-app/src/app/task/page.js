@@ -123,7 +123,7 @@ export const HabitsList = () => {
             >
               <div className="[&>section]:hidden hover:[&>section]:visible">
                 <h3 className="font-extrabold text-center">
-                  {task.task_polarity ? "INCREASE" : "DECREASE"}
+                  {task.task_polarity ? "INCREASE" : "REDUCE"}
                 </h3>
                 <h3 className="text-md text-center">{task.name}</h3>
                 <section className=""></section>

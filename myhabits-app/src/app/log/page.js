@@ -15,6 +15,9 @@ export default function Page() {
   const [tasks, setTasks] = useState([]);
   const daysOfTheWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+  const todaysDate = new Date();
+  let todaysDate_dayOfWeek = todaysDate.getDay();
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -64,6 +67,7 @@ export default function Page() {
   
                   </h3> */}
                     <h3 className="text-sm text-center">
+                      {task.task_polarity ? "+" : "-"}
                       {task.name}
                       <br></br>
                     </h3>
@@ -85,14 +89,34 @@ export default function Page() {
 
             <tbody>
               {tasks.map((task) => (
-                <tr className="text-center h-[52px] p-4">
+                <tr className="text-center h-[70px] p-4">
                   {daysOfTheWeek.map((day) => (
-                    <td>
+                    <td
+                      key={day}
+                      className="[&>input]:w-[2rem] [&>input]:h-[2rem]"
+                    >
                       <input type="checkbox"></input>
                     </td>
                   ))}
                 </tr>
               ))}
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <button
+                    type="submit"
+                    className="text-center bg-green-600 p-4 mx-auto"
+                  >
+                    Submit
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
