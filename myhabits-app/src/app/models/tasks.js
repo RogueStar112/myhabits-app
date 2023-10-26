@@ -43,8 +43,16 @@ const taskSchema = new mongoose.Schema({
 
 // console.log("CONNECTION", _connection);
 
-const Task = mongoose.model("Task") || mongoose.model("Task", taskSchema);
+let Task = mongoose.model("Task") || mongoose.model("Task", taskSchema);
 
-// alert(Task);
+try {
+  Task = mongoose.model("Task");
+} catch (error) {
+  if (error.name === "MissingSchemaError") {
+    Task = mongoose.model("Task", taskSchema);
+  }
+}
 
 export default Task;
+
+// alert(Task);

@@ -50,6 +50,60 @@ export default function Page() {
   );
 }
 
+export const Habit = ({ task }) => {
+  const [displayTask, setDisplayTask] = useState(false);
+
+  const viewTask = async () => {
+    setDisplayTask(!displayTask);
+    console.log(displayTask);
+  };
+
+  return (
+    <li
+      className="w-[256px] pt-4 rounded-lg"
+      style={{
+        backgroundColor: task.task_polarity ? "#2F855A" : "#C53030",
+      }}
+      key={task._id}
+    >
+      <div className="[&>section]:hidden hover:[&>section]:visible">
+        <h3 className="text-md text-center">
+          <span className="font-extrabold">
+            {task.task_polarity ? "INCREASE" : "REDUCE"}
+          </span>{" "}
+          {task.name}
+          <br></br>
+          {displayTask
+            ? `${task.task_freq}x/week ➡️ ${task.task_freq_t}x/week`
+            : ""}
+        </h3>
+        <section className=""></section>
+      </div>
+
+      <div className="flex justify-center [&>*]:w-full ">
+        <Link
+          href={`/edit/${task._id}`}
+          className="hover:bg-orange-400 rounded-lg duration-[300ms] /bg-gradient-to-r /from-yellow-400 /to-transparent text-white mt-2 p-2"
+        >
+          EDIT
+        </Link>
+        <button
+          onClick={() => viewTask()}
+          className="hover:bg-blue-400 rounded-lg duration-[300ms] /bg-gradient-to-r /from-transparent /to-blue-800 /to-transparent mt-2"
+        >
+          VIEW
+        </button>
+        <button
+          onClick={() => deleteTask(task._id)}
+          className="hover:bg-red-400 rounded-lg duration-[300ms] /bg-gradient-to-r /from-blue-800 /via-purple-800 /to-purple-800 mt-2 p-2 text-right"
+        >
+          DELETE
+        </button>
+      </div>
+    </li>
+  );
+};
+
 export const HabitsList = () => {
   const [tasks, setTasks] = useState([]);
 
@@ -114,66 +168,7 @@ export const HabitsList = () => {
         <h2>Habits List</h2>
         <ul className="flex flex-col gap-4 h-screen pr-4 overflow-y-scroll">
           {tasks.map((task) => (
-            <li
-              className="w-[256px] pt-4 rounded-lg"
-              style={{
-                backgroundColor: task.task_polarity ? "#2F855A" : "#C53030",
-              }}
-              key={task._id}
-            >
-              <div className="[&>section]:hidden hover:[&>section]:visible">
-                <h3 className="font-extrabold text-center">
-                  {task.task_polarity ? "INCREASE" : "REDUCE"}
-                </h3>
-                <h3 className="text-md text-center">{task.name}</h3>
-                <section className=""></section>
-              </div>
-
-              <div className="flex justify-between [&>*]:w-full ">
-                <Link
-                  href={`/edit/${task._id}`}
-                  className="bg-gradient-to-r from-yellow-400 to-transparent text-black mt-2 p-2"
-                >
-                  ✏️ EDIT
-                </Link>
-                <button
-                  onClick={() => deleteTask(task._id)}
-                  className="bg-gradient-to-l from-red-800 to-transparent mt-2 p-2 text-right"
-                >
-                  DELETE 🗑️
-                </button>
-              </div>
-
-              {/* <table className="auto md:hidden text-center shadow-lg border-separate">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th className="text-left px-8 py-4">Current</th>
-                    <th className="text-left px-8 py-4">Target</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td className="p-4">Frequency</td>
-                    <td>{task.task_freq}x</td>
-                    <td>{task.task_freq_t}x</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">Spent</td>
-                    <td>
-                      {task.task_avg}{" "}
-                      {task.name.includes("Buying") ? "GBP" : "mins"}
-                    </td>
-                    <td>
-                      {task.task_avg_t}{" "}
-                      {task.name.includes("Buying") ? "GBP" : "mins"}
-                    </td>
-                  </tr>
-                </tbody>
-              </table> */}
-            </li>
+            <Habit task={task}></Habit>
           ))}
         </ul>
       </div>
@@ -255,11 +250,8 @@ export function AddHabitForm({ tasks, setTasks }) {
     <div class="flex flex-col">
       <h2 className="font-extrabold mt-4">HABITS MANAGER</h2>
       <form onSubmit={handleSubmit} className="max-w-xl mt-4">
-        <div className="flex [&>label]:mt-4 [&>input]:mt-4">
-          <label
-            className="text-sm font-normal italic mb-2"
-            htmlFor="habit_name"
-          >
+        <div className="flex flex-col [&>label]:mt-4 [&>input]:my-4">
+          <label className="text-sm font-bold mb-2" htmlFor="habit_name">
             HABIT NAME
           </label>
           <input
@@ -303,7 +295,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           <label htmlFor="habit_decrease">Reduce</label>
         </div>
 
-        <div className="flex my-3 justify-between">
+        <div className="flex flex-col my-3 justify-between">
           <label
             className="block text-sm font-normal italic mb-2"
             htmlFor="habit_frequency"
@@ -322,7 +314,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           ></input>
         </div>
 
-        <div className="flex my-3 justify-between">
+        <div className="flex flex-col my-3 justify-between">
           <label
             className="block text-sm font-normal italic mb-2"
             htmlFor="habit_duration"
@@ -340,7 +332,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           ></input>
         </div>
 
-        <div className="flex my-3 justify-between">
+        <div className="flex flex-col my-3 justify-between">
           <label
             className="block text-sm font-normal italic mb-2"
             htmlFor="habit_frequency_target"
@@ -358,7 +350,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           ></input>
         </div>
 
-        <div className="flex my-3 justify-between">
+        <div className="flex flex-col my-3 justify-between">
           <label
             className="block text-sm font-normal italic mb-2"
             htmlFor="habit_duration_target"
@@ -377,7 +369,9 @@ export function AddHabitForm({ tasks, setTasks }) {
         </div>
 
         <br></br>
-        <button type="submit">SUBMIT</button>
+        <button className="bg-green-600 p-6 w-full rounded-lg" type="submit">
+          SUBMIT
+        </button>
       </form>
     </div>
   );
