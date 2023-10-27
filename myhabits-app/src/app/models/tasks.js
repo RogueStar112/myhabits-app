@@ -43,7 +43,9 @@ const taskSchema = new mongoose.Schema({
 
 // console.log("CONNECTION", _connection);
 
-let Task = mongoose.model("Task") || mongoose.model("Task", taskSchema);
+let Task = mongoose.model("Task", taskSchema);
+
+Task = mongoose.model("Task");
 
 try {
   Task = mongoose.model("Task");

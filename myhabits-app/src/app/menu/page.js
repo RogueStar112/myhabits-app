@@ -41,6 +41,13 @@ export default function Page() {
 
           <MenuItem
             index="5"
+            title="Achievements"
+            description="Look at how far you've come."
+            href="/achievements"
+          />
+
+          <MenuItem
+            index="6"
             title="Settings"
             description="Set themes, font, etc."
             href="/settings"

@@ -255,7 +255,7 @@ export function AddHabitForm({ tasks, setTasks }) {
             HABIT NAME
           </label>
           <input
-            className="shadow appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none bg-[#222222] border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-white"
             type="text"
             name="habit_name"
             onChange={handleChange}
@@ -305,7 +305,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           </label>
 
           <input
-            className="shadow appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow bg-[#222222] appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="habit_frequency"
             onChange={handleChange}
@@ -323,7 +323,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           </label>
 
           <input
-            className="shadow appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow bg-[#222222] appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="habit_duration"
             placeholder="30 (minutes)"
@@ -341,7 +341,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           </label>
 
           <input
-            className="shadow appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow bg-[#222222] appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="habit_frequency_target"
             onChange={handleChange}
@@ -359,7 +359,7 @@ export function AddHabitForm({ tasks, setTasks }) {
           </label>
 
           <input
-            className="shadow appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow bg-[#222222] appearance-none border rounded mx-3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="habit_duration_target"
             onChange={handleChange}
